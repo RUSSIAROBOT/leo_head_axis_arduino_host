@@ -1,3 +1,9 @@
+/*
+*
+*
+*
+*/
+
 #if (ARDUINO >= 100)
 #include <Arduino.h>
 #else
@@ -21,10 +27,10 @@ ros::NodeHandle  nh;
 
 
 //////публикатор в топик
-////?????????????????????????????str_msg или парсить
+/*
 std_msgs::String str_msg;
 ros::Publisher headpos("headpos", &str_msg);
-
+*/
 
 
 
@@ -35,16 +41,17 @@ ros::Publisher headpos("headpos", &str_msg);
 ////////////функция выполнения движения//////////////////////
 
 void headmove_Cb(const std_msgs::Float32MultiArray& move_msg) {
+  //осьX
   Serial2.print("move ");
-  Serial2.print(move_msg.data[0]);
+  Serial2.print(move_msg.data[0]); //полученные значения из ROS
   Serial2.println(" 30");
 
+  //осьY
   Serial3.print("move ");
-  Serial3.print(move_msg.data[1]);
+  Serial3.print(move_msg.data[1]); //полученные значения из ROS
   Serial3.println(" 10");
 }
 
-//////////////////////////////////////////////////////////////
 
 ////////////////////////получающий сообщение из topic pub
 ros::Subscriber<std_msgs::Float32MultiArray> sub("headmove", headmove_Cb);
@@ -82,6 +89,7 @@ void loop() {
   delay(2);
 }
 
+/*
 void pos_x() {
 
 }
@@ -89,9 +97,9 @@ void pos_x() {
 void pos_y() {
 
 }
+*/
 
 /////////////функция_сброса_контроллеров_шд//////////////////////
-/////////////////////////////////////////////////////////////////
 
 void reset_axis() {
   if (Serial2.available() < 0) {
@@ -109,7 +117,6 @@ void reset_axis() {
 
 
 /////////////функция_остановки_контроллеров_шд//////////////////////
-/////////////////////////////////////////////////////////////////
 
 void stop_axis() {
   Serial2.print("stop");
@@ -119,7 +126,6 @@ void stop_axis() {
 
 
 /////////////функция_установки_нуля_контроллеров_шд//////////////
-/////////////////////////////////////////////////////////////////
 
 void setzero_controllers_motors() {
   Serial2.print("setzero");
